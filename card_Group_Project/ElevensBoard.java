@@ -56,8 +56,7 @@ public class ElevensBoard extends Board{
 	public boolean anotherPlayIsPossible() {
 		
 		List<Integer>list = cardIndexes();
-//		System.out.println("the list is "+isLegal(list));
-		if (isLegal(list)) {
+		if (containsJQK(list)||containsPairSum11(list)) {
 			return true;
 		}
 		return false;
@@ -86,8 +85,13 @@ public class ElevensBoard extends Board{
 	@Override
 	public boolean isLegal(List<Integer> selectedCards) {
 		
-		if (containsJQK(selectedCards) || containsPairSum11(selectedCards)) {
-			return true;
+		if (selectedCards.size()==2) {
+			if (containsPairSum11(selectedCards)) return true;
+			return false;
+		}
+		if (selectedCards.size()==3) {
+			if (containsJQK(selectedCards)) return true;
+			return false;
 		}
 		return false;
 	}
