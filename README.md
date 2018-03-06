@@ -9,4 +9,5 @@ The recent Elevens-Board-Game Project has been added to this folder. This AP CS 
 
 # March 6, 2018
 Comit two recent projects into the folder. The `SortingProject` is to make a phonebook with functions such as adding/deleting/setting personal information, writing/reading to file, and sorting. The other project is in the `20180306` folder, which records answers to a set of AP CS problems.
-//TODO add information about `holiday project` and finish the `SortingProject`//
+
+//TODO add information about `holiday project` and finish the `SortingProject`
