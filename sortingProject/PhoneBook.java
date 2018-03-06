@@ -120,6 +120,7 @@ public class PhoneBook {
 	}
 	
 	public static void main(String[] args) {
+		//example of writing phone book information to file.
 		PhoneBook book = new PhoneBook();
 		book.addPerson(new Person("kidam","123451","510630"));
 		book.addPerson(new Person("bidam","123451","510630"));
@@ -127,6 +128,6 @@ public class PhoneBook {
 		book.addPerson(new Person("ccc","123451","510630"));
 		book.sort();
 		book.printBook();
-		book.writeToFile("C:\\Users\\asus\\Desktop\\printToFile.txt");
+		book.writeToFile("C:/Users/asus/Desktop/printToFile.txt");
 	}
 }
