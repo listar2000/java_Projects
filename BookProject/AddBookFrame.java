@@ -1,25 +1,25 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class AddBookFrame extends JFrame implements ActionListener{
 
-	/**
-	 * 
-	 */
-	private SendFileFrame sendFileFrame;
+	private static final long serialVersionUID = 1L;
 	
+	private SendFileFrame sendFileFrame;
 	private JPanel contentPane;
 	private JTextField nameTextField;
 	private JTextField urlTextField;
@@ -29,6 +29,7 @@ public class AddBookFrame extends JFrame implements ActionListener{
 	private JButton submit_Button;
 
 	private JFileChooser fileChooser;
+	private File approvedFile;
 	/**
 	 * Launch the application.
 	 */
@@ -52,12 +53,13 @@ public class AddBookFrame extends JFrame implements ActionListener{
 		this.sendFileFrame = sendFileFrame;
 	}
 	
-	public void exhibit() {
+	public void exhibit() 
+	{
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setTitle("\u6DFB\u52A0\u4E66\u7C4D");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 261);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.LIGHT_GRAY);
@@ -80,7 +82,7 @@ public class AddBookFrame extends JFrame implements ActionListener{
 		JLabel label = new JLabel("\u4E66\u540D\uFF1A");
 		label.setBackground(Color.WHITE);
 		label.setForeground(Color.DARK_GRAY);
-		label.setFont(new Font("����", Font.PLAIN, 14));
+		label.setFont(new Font("ËÎÌå", Font.PLAIN, 14));
 		label.setBounds(36, 67, 42, 15);
 		contentPane.add(label);
 		
@@ -92,7 +94,7 @@ public class AddBookFrame extends JFrame implements ActionListener{
 		
 		JLabel label_1 = new JLabel("\u8DEF\u5F84\uFF1A");
 		label_1.setForeground(Color.BLACK);
-		label_1.setFont(new Font("����", Font.PLAIN, 14));
+		label_1.setFont(new Font("ËÎÌå", Font.PLAIN, 14));
 		label_1.setBounds(36, 116, 42, 15);
 		contentPane.add(label_1);
 		
@@ -103,10 +105,7 @@ public class AddBookFrame extends JFrame implements ActionListener{
 		contentPane.add(urlTextField);
 		
 		reset_Button = new JButton("\u91CD\u7F6E");
-		reset_Button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		reset_Button.addActionListener(this);
 		reset_Button.setToolTipText("\u6253\u5F00\u6587\u4EF6\u9009\u62E9\u5668\u9009\u62E9\u6587\u4EF6");
 		reset_Button.setForeground(Color.BLACK);
 		reset_Button.setBackground(Color.WHITE);
@@ -117,6 +116,7 @@ public class AddBookFrame extends JFrame implements ActionListener{
 		submit_Button = new JButton("SUBMIT");
 		submit_Button.setBackground(Color.PINK);
 		submit_Button.setBounds(168, 155, 93, 46);
+		submit_Button.addActionListener(this);
 		contentPane.add(submit_Button);
 	}
 
@@ -128,21 +128,33 @@ public class AddBookFrame extends JFrame implements ActionListener{
 			urlTextField.setText("");
 		}
 		
-		if (e.getSource() == select_Button) {
-			fileChooser = new JFileChooser("ѡһ���ļ�");
+		if (e.getSource() == select_Button) 
+		{
+			fileChooser = new JFileChooser("选择文件");
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			
 			int i = fileChooser.showOpenDialog(null);
 			
 			if (i == JFileChooser.APPROVE_OPTION) {
 				
-				String path = fileChooser.getSelectedFile().getPath();
+				File file = fileChooser.getSelectedFile();
+				String path = file.getPath();
 				
-				if (!(path.endsWith(".pdf") || path.endsWith(".epub"))) return;
+				if (!(path.endsWith(".pdf") || path.endsWith(".epub"))) {
+					JOptionPane.showMessageDialog(null, "选择的文件必须是epub或者pdf格式");
+					return;
+				}
 				
-				nameTextField.setText(fileChooser.getSelectedFile().getName());
+				approvedFile = file;
+				nameTextField.setText(file.getName());
 				urlTextField.setText(path);
 			}
+		}
+		
+		if (e.getSource() == submit_Button) {
+			if (nameTextField.getText().equals("") || nameTextField.getText() == null) 
+				JOptionPane.showMessageDialog(null, "选择文件不能为空");
+			sendFileFrame.addBook(new Book(approvedFile));
 		}
 	}
 
