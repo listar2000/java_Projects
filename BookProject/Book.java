@@ -10,6 +10,11 @@ public class Book {
 		this.file = new File(url);
 	}
 	
+	public Book(File file) {
+		this.name = file.getName();
+		this.file = file;
+	}
+
 	public String getName() {
 		return this.name;
 	}
