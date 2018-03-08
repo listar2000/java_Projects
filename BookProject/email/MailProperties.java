@@ -8,7 +8,7 @@ public class MailProperties {
 //	private static String mySMTPPort = "25"; //if the SSL is closed
 	private static String mySMTPPort = "25";
 	private static String username = "listar2000@163.com";
-	private static String password = "listar2000";
+	private static String password = "xxxxxx";
 	
 	public static Properties getProperties() 
 	{
