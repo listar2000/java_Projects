@@ -10,4 +10,11 @@ The recent Elevens-Board-Game Project has been added to this folder. This AP CS 
 # March 6, 2018
 Comit two recent projects into the folder. The `SortingProject` is to make a phonebook with functions such as adding/deleting/setting personal information, writing/reading to file, and sorting. The other project is in the `20180306` folder, which records answers to a set of AP CS problems.
 
-//TODO add information about `holiday project` and finish the `SortingProject`
+#### Updated on March 8, 2018
+Sorry to omit the `holiday project` which I've done during the holidays (in fact that is a homework currently). The project involves various methods for image-processing. A complete GUI-based project, it also offers effective uses of CardLayout and etc.
+
+//TODO finish the SortingProject (the part of file IO)
+
+# March 8, 2018
+The BookProject is updated. An extension from the library_project I did before for AP CS, this project now incorporates design pattern which makes the codes more effective, resuable, and concise. The web part of this project is left to be done by Jeffson.
+
