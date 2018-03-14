@@ -14,7 +14,8 @@ public class PhoneBook {
 		personList = new ArrayList<>();
 	}
 	
-	public void addPerson(Person person) {
+	public void addPerson(Person person) 
+	{
 		personList.add(person);
 	}
 	
@@ -24,10 +25,11 @@ public class PhoneBook {
 		
 		return personList.remove(person);
 	}
+	
 	//TODO reconstruct this method changePerson() for better operation
-	public void changePerson(String oldName, String newName, String newPhone, String newZip) {
-		
-		int personIndex = getPersonIndex(oldName);
+	public void changePerson(String oldName, String newName, String newPhone, String newZip) 
+	{
+			int personIndex = getPersonIndex(oldName);
 		
 		if (personIndex == -1) return;
 		
@@ -37,12 +39,28 @@ public class PhoneBook {
 		
 	}
 	
-	public void sort() {
-		
+	public void sortByName() 
+	{		
+		for (int j = 0; j < personList.size()-1; j++) {
+			int miniIndex = j;
+			for (int k = j+1; k < personList.size(); k++) {
+				if (personList.get(miniIndex).getName().compareTo(personList.get(k).getName()) > 0) {
+					miniIndex = k;
+				}
+			}
+			Person swap = personList.get(j);
+			personList.set(j, personList.get(miniIndex));
+			personList.set(miniIndex, swap);
+		}
+	}
+	
+	public void sortByNum()
+	{
 		for (int j = 0; j < personList.size(); j++) {
 			Person firstPerson = personList.get(j);
 			for (int i = j+1; i < personList.size(); i++) {
-				if (firstPerson.getName().compareTo(personList.get(i).getName()) > 0) {
+				if (Integer.parseInt(firstPerson.getPhone()) - Integer.parseInt(personList.get(i).getPhone()) < 0)
+			    {
 					Person secondPerson = personList.get(i);
 					int secondIndex = getPersonIndex(firstPerson.getName());
 					personList.set(secondIndex, secondPerson);
@@ -51,20 +69,10 @@ public class PhoneBook {
 				}
 			}
 		}
-		
-//		Person firstPerson = personList.get(0);
-//		for (int i = 0; i < personList.size(); i++) {
-//			if (firstPerson.getName().compareTo(personList.get(i).getName()) > 0) {
-//				int secondIndex = getPersonIndex(firstPerson.getName());
-//				personList.set(secondIndex, personList.get(i));
-//				personList.set(i, firstPerson);
-//				firstPerson = personList.get(i);
-//			}
-//		}
 	}
 	
-	public Person getPerson(String name) {
-		
+	public Person getPerson(String name) 
+	{	
 		int personIndex = getPersonIndex(name);
 		
 		if (personIndex == -1) return null;
@@ -73,8 +81,8 @@ public class PhoneBook {
 		
 	}
 	
-	private int getPersonIndex(String name) {
-		
+	private int getPersonIndex(String name) 
+	{	
 		int index = 0;
 		while (personList.get(index).getName() != name && index < personList.size()) {
 			index ++;
@@ -126,8 +134,9 @@ public class PhoneBook {
 		book.addPerson(new Person("bidam","123451","510630"));
 		book.addPerson(new Person("aaa","123451","510630"));
 		book.addPerson(new Person("ccc","123451","510630"));
-		book.sort();
+		book.addPerson(new Person("absent","123451","510630"));
+		book.sortByName();
 		book.printBook();
-		book.writeToFile("C:/Users/asus/Desktop/printToFile.txt");
+//		book.writeToFile("C:/Users/asus/Desktop/printToFile.txt");
 	}
 }
