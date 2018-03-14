@@ -19,24 +19,28 @@ public class PhoneBook {
 		personList.add(person);
 	}
 	
-	public boolean removePerson(Person person) {
+	public boolean removePerson(String name) {
 		//empty check
 		if (personList.size() == 0) return false;
 		
-		return personList.remove(person);
+		for (Person p: personList) {
+			if (p.getName() == name) {
+				personList.remove(p);
+				return true;
+			}
+		}
+		return false;
 	}
 	
-	//TODO reconstruct this method changePerson() for better operation
 	public void changePerson(String oldName, String newName, String newPhone, String newZip) 
 	{
-			int personIndex = getPersonIndex(oldName);
+		int personIndex = getPersonIndex(oldName);
 		
 		if (personIndex == -1) return;
 		
 		personList.get(personIndex).setName(newName);
 		personList.get(personIndex).setPhone(newPhone);
 		personList.get(personIndex).setZipCode(newZip);
-		
 	}
 	
 	public void sortByName() 
@@ -56,18 +60,18 @@ public class PhoneBook {
 	
 	public void sortByNum()
 	{
-		for (int j = 0; j < personList.size(); j++) {
-			Person firstPerson = personList.get(j);
-			for (int i = j+1; i < personList.size(); i++) {
-				if (Integer.parseInt(firstPerson.getPhone()) - Integer.parseInt(personList.get(i).getPhone()) < 0)
-			    {
-					Person secondPerson = personList.get(i);
-					int secondIndex = getPersonIndex(firstPerson.getName());
-					personList.set(secondIndex, secondPerson);
-					personList.set(i, firstPerson);
-					firstPerson = secondPerson;
+		for (int j = 0; j < personList.size()-1; j++) {
+			int miniIndex = j;
+			for (int k = j+1; k < personList.size(); k++) {
+
+				if (Integer.parseInt(personList.get(miniIndex).getPhone()) 
+						- Integer.parseInt(personList.get(k).getPhone()) > 0) {
+					miniIndex = k;
 				}
 			}
+			Person swap = personList.get(j);
+			personList.set(j, personList.get(miniIndex));
+			personList.set(miniIndex, swap);
 		}
 	}
 	
@@ -130,13 +134,15 @@ public class PhoneBook {
 	public static void main(String[] args) {
 		//example of writing phone book information to file.
 		PhoneBook book = new PhoneBook();
-		book.addPerson(new Person("kidam","123451","510630"));
+		book.addPerson(new Person("kidam","123450","510630"));
 		book.addPerson(new Person("bidam","123451","510630"));
-		book.addPerson(new Person("aaa","123451","510630"));
-		book.addPerson(new Person("ccc","123451","510630"));
-		book.addPerson(new Person("absent","123451","510630"));
+		book.addPerson(new Person("aaa","123452","510630"));
+		book.addPerson(new Person("ccc","123453","510630"));
+		book.addPerson(new Person("ab","123454","510630"));
 		book.sortByName();
 		book.printBook();
-//		book.writeToFile("C:/Users/asus/Desktop/printToFile.txt");
+		book.sortByNum();
+		book.printBook();
+		book.writeToFile("C:/Users/asus/Desktop/printToFile.txt");
 	}
 }
