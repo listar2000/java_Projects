@@ -1,17 +1,29 @@
 package sortingProject;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+
+import com.google.zxing.Writer;
+
 public class PhoneBook {
 	
 	private ArrayList <Person> personList;
+	private BufferedWriter writer;
+	
+	
 	
 	public PhoneBook() {
 		personList = new ArrayList<>();
+		autoLoadBeforeStart();
 	}
 	
 	public void addPerson(Person person) 
@@ -24,7 +36,7 @@ public class PhoneBook {
 		if (personList.size() == 0) return false;
 		
 		for (Person p: personList) {
-			if (p.getName() == name) {
+			if (p.getName().equals(name)) {
 				personList.remove(p);
 				return true;
 			}
@@ -60,18 +72,31 @@ public class PhoneBook {
 	
 	public void sortByNum()
 	{
-		for (int j = 0; j < personList.size()-1; j++) {
-			int miniIndex = j;
-			for (int k = j+1; k < personList.size(); k++) {
-
-				if (Integer.parseInt(personList.get(miniIndex).getPhone()) 
-						- Integer.parseInt(personList.get(k).getPhone()) > 0) {
-					miniIndex = k;
-				}
+		//selection sorting
+//		for (int j = 0; j < personList.size()-1; j++) {
+//			int miniIndex = j;
+//			for (int k = j+1; k < personList.size(); k++) {
+//
+//				if (Integer.parseInt(personList.get(miniIndex).getPhone()) 
+//						- Integer.parseInt(personList.get(k).getPhone()) > 0) {
+//					miniIndex = k;
+//				}
+//			}
+//			Person swap = personList.get(j);
+//			personList.set(j, personList.get(miniIndex));
+//			personList.set(miniIndex, swap);
+//		}
+		//insertion sorting
+		for (int j = 1; j < personList.size(); j++) 
+		{
+			int possibleIndex = j;
+			Person swap = personList.get(possibleIndex);
+			while (possibleIndex > 0 && swap.getName()
+					.compareTo(personList.get(possibleIndex-1).getName()) > 0) {
+				personList.set(possibleIndex, personList.get(possibleIndex-1));
+				possibleIndex--;
 			}
-			Person swap = personList.get(j);
-			personList.set(j, personList.get(miniIndex));
-			personList.set(miniIndex, swap);
+			personList.set(possibleIndex, swap);
 		}
 	}
 	
@@ -107,6 +132,16 @@ public class PhoneBook {
 		System.out.println(this);
 	}
 	
+	public void userCreateFile() {
+		JFileChooser chooser = new JFileChooser();
+		int option = chooser.showSaveDialog(null);
+		if (option == JFileChooser.APPROVE_OPTION) {
+			String path = chooser.getSelectedFile().getAbsolutePath();
+			if (!path.endsWith(".txt")) System.out.println("***选择文件形式必须为txt***");
+			else writeToFile(path);
+		}
+	}
+	
 	public void writeToFile(String filePath) {
 		
 		File file = new File(filePath);
@@ -119,7 +154,7 @@ public class PhoneBook {
 			writer = new BufferedWriter(new FileWriter(file));
 			writer.write(toString());
 			writer.flush();
-			System.out.println("the phonebook has been succesfully printed to file");
+			System.out.println("the phonebook has been succesfully printed to "+filePath);
 		} catch (IOException e1) {
 				e1.printStackTrace();
 		} finally {
@@ -131,18 +166,44 @@ public class PhoneBook {
 		}
 	}
 	
-	public static void main(String[] args) {
-		//example of writing phone book information to file.
-		PhoneBook book = new PhoneBook();
-		book.addPerson(new Person("kidam","123450","510630"));
-		book.addPerson(new Person("bidam","123451","510630"));
-		book.addPerson(new Person("aaa","123452","510630"));
-		book.addPerson(new Person("ccc","123453","510630"));
-		book.addPerson(new Person("ab","123454","510630"));
-		book.sortByName();
-		book.printBook();
-		book.sortByNum();
-		book.printBook();
-		book.writeToFile("C:/Users/asus/Desktop/printToFile.txt");
+	public void autoLoadBeforeStart() 
+	{
+		File autoFile = new File("E:/save.txt");
+		String personInfo = null;
+		if (!autoFile.exists()) {
+			System.out.println("无法找到上次结束程序保存的数据");
+			return;
+		}
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(autoFile));
+			while ((personInfo = reader.readLine()) != null) {
+				String [] info = personInfo.split("#");
+				System.out.println(info[0]);
+				personList.add(new Person(info[0], info[1], info[2]));
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void autoSaveBeforeExit() {
+		
+		File autoFile = new File("E:/save.txt");
+		try {
+			if (!autoFile.exists()) autoFile.createNewFile();
+			writer = new BufferedWriter(new FileWriter(autoFile));
+			StringBuilder builder = new StringBuilder();
+			for (Person person: personList) {
+				builder.append(person.getName()+"#"+person.getPhone()+"#"+person.getZipCode());
+				builder.append("\n");
+			}
+			System.out.println(builder.toString());
+			writer.write(builder.toString());
+			writer.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	}
 }
