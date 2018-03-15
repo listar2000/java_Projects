@@ -13,8 +13,9 @@ Comit two recent projects into the folder. The `SortingProject` is to make a pho
 #### Updated on March 8, 2018
 Sorry to omit the `holiday project` which I've done during the holidays (in fact that is a homework currently). The project involves various methods for image-processing. A complete GUI-based project, it also offers effective uses of CardLayout and etc.
 
-//TODO finish the SortingProject (the part of file IO)
-
 # March 8, 2018
 The BookProject is updated. An extension from the library_project I did before for AP CS, this project now incorporates design pattern which makes the codes more effective, resuable, and concise. The web part of this project is left to be done by Jeffson.
 
+# March 15, 2018
+(The sorting project's IO functions has been finished, now struggling over which type of file to store the information)
+Refine the sorting algorithm behind the sorting project `Bubble Sorting --> Selection Sorting/ Insertion Sorting`. This change is only intended to beautify the codes. 
