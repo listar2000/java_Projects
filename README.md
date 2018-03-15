@@ -19,3 +19,5 @@ The BookProject is updated. An extension from the library_project I did before f
 # March 15, 2018
 (The sorting project's IO functions has been finished, now struggling over which type of file to store the information)
 Refine the sorting algorithm behind the sorting project `Bubble Sorting --> Selection Sorting/ Insertion Sorting`. This change is only intended to beautify the codes. 
+
+P.S. new functionalities are successfully added to the program. Now it seems less like a toy than an imitation to a practical software. Autoloading and autosaving are added, so that the information users store will remain every time the program is executed.
