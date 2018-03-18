@@ -14,23 +14,37 @@ import javax.swing.filechooser.FileFilter;
 
 import com.google.zxing.Writer;
 
+/**
+ * @author listar2000
+ * @project APCS Sorting Project
+ */
 public class PhoneBook {
 	
 	private ArrayList <Person> personList;
 	private BufferedWriter writer;
 	
-	
-	
+	/**
+	 *@constructor <b>构造器中才初始化数组并且会自动读取上一次保存的文档</b>
+	 */
 	public PhoneBook() {
 		personList = new ArrayList<>();
 		autoLoadBeforeStart();
 	}
 	
+	/**
+	 * @param <b>想要加入的Person对象，在菜单中由用户输入的数据构造</b>
+	 * @return 无
+	 */
 	public void addPerson(Person person) 
 	{
 		personList.add(person);
 	}
 	
+	/**
+	 * 
+	 * @param 想要删除的人的用户名
+	 * @return 当列表联系人数量为0或者查无此人时为false，否则成功删除且返回true
+	 */
 	public boolean removePerson(String name) {
 		//empty check
 		if (personList.size() == 0) return false;
@@ -44,6 +58,13 @@ public class PhoneBook {
 		return false;
 	}
 	
+	/**
+	 * @depreciated 暂时没有用处
+	 * @param 以前的名字
+	 * @param 新的名字
+	 * @param 新的手机号
+	 * @param 新的地址
+	 */
 	public void changePerson(String oldName, String newName, String newPhone, String newZip) 
 	{
 		int personIndex = getPersonIndex(oldName);
@@ -55,6 +76,9 @@ public class PhoneBook {
 		personList.get(personIndex).setZipCode(newZip);
 	}
 	
+	/**
+	 * 核心排序算法，使用冒泡排序法
+	 */
 	public void sortByName() 
 	{		
 		for (int j = 0; j < personList.size()-1; j++) {
@@ -70,6 +94,9 @@ public class PhoneBook {
 		}
 	}
 	
+	/**
+	 * 可选择选择排序或者是插入排序，核心算法
+	 */
 	public void sortByNum()
 	{
 		//selection sorting
@@ -100,6 +127,11 @@ public class PhoneBook {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param name
+	 * @return 找到的人，若不匹配返回null
+	 */
 	public Person getPerson(String name) 
 	{	
 		int personIndex = getPersonIndex(name);
@@ -110,6 +142,11 @@ public class PhoneBook {
 		
 	}
 	
+	/**
+	 * 
+	 * @param name
+	 * @return 找到的人，若不匹配返回null
+	 */
 	private int getPersonIndex(String name) 
 	{	
 		int index = 0;
@@ -121,6 +158,9 @@ public class PhoneBook {
 		return index;
 	}
 	
+	/**
+	 * 定义console中用户的输出格式
+	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -128,10 +168,16 @@ public class PhoneBook {
 		return builder.toString();
 	}
 	
+	/**
+	 * 测试方法
+	 */
 	public void printBook() {
 		System.out.println(this);
 	}
 	
+	/**
+	 * 提供一个用户自定义存储路径的方式
+	 */
 	public void userCreateFile() {
 		JFileChooser chooser = new JFileChooser();
 		int option = chooser.showSaveDialog(null);
@@ -142,6 +188,10 @@ public class PhoneBook {
 		}
 	}
 	
+	/**
+	 * 存储用户数据到一个指定文件夹
+	 * @param filePath
+	 */
 	public void writeToFile(String filePath) {
 		
 		File file = new File(filePath);
@@ -166,9 +216,12 @@ public class PhoneBook {
 		}
 	}
 	
+	/**
+	 * 在程序开始运行时导入数据
+	 */
 	public void autoLoadBeforeStart() 
 	{
-		File autoFile = new File("E:/save.txt");
+		File autoFile = new File("/projectProperties.txt");
 		String personInfo = null;
 		if (!autoFile.exists()) {
 			System.out.println("无法找到上次结束程序保存的数据");
@@ -178,7 +231,8 @@ public class PhoneBook {
 			BufferedReader reader = new BufferedReader(new FileReader(autoFile));
 			while ((personInfo = reader.readLine()) != null) {
 				String [] info = personInfo.split("#");
-				System.out.println(info[0]);
+				//The following line is for test.
+				//System.out.println(info[0]);
 				personList.add(new Person(info[0], info[1], info[2]));
 			}
 		} catch (FileNotFoundException e) {
@@ -188,9 +242,12 @@ public class PhoneBook {
 		}
 	}
 	
+	/**
+	 * 在程序结束后保存数据
+	 */
 	public void autoSaveBeforeExit() {
 		
-		File autoFile = new File("E:/save.txt");
+		File autoFile = new File("/projectProperties.txt");
 		try {
 			if (!autoFile.exists()) autoFile.createNewFile();
 			writer = new BufferedWriter(new FileWriter(autoFile));
@@ -199,11 +256,30 @@ public class PhoneBook {
 				builder.append(person.getName()+"#"+person.getPhone()+"#"+person.getZipCode());
 				builder.append("\n");
 			}
-			System.out.println(builder.toString());
+			//The following line is for test only;
+			//System.out.println(builder.toString());
 			writer.write(builder.toString());
 			writer.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}	
+		}
+		
+	}     
+	
+	public static void main(String[] args) {
+		//example of writing phone book information to file.
+//		PhoneBook book = new PhoneBook();
+//		book.addPerson(new Person("kidam","123450","510630"));
+//		book.addPerson(new Person("bidam","123451","510630"));
+//		book.addPerson(new Person("aaa","123452","510630"));
+//		book.addPerson(new Person("ccc","123453","510630"));
+//		book.addPerson(new Person("ab","123454","510630"));
+//		book.sortByName();
+//		book.printBook();
+//		book.sortByNum();
+//		book.printBook();
+//		book.autoSaveBeforeExit();
+//		book.userCreateFile();
+//		book.writeToFile("C:/Users/asus/Desktop/printToFile.txt");
 	}
 }
