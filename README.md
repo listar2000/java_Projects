@@ -21,3 +21,6 @@ The BookProject is updated. An extension from the library_project I did before f
 Refine the sorting algorithm behind the sorting project `Bubble Sorting --> Selection Sorting/ Insertion Sorting`. This change is only intended to beautify the codes. 
 
 P.S. new functionalities are successfully added to the program. Now it seems less like a toy than an imitation to a practical software. Autoloading and autosaving are added, so that the information users store will remain every time the program is executed.
+
+# April 8, 2018
+Recently I only did two things for this repo (meaning that I'm totally disappointed by the CS course and decide to do sth on my own XD). One is about a special diamond pattern printed out in the console window, and I did this to answer a question on Zhihu (which was unfortunately closed TT); secondly, I have to do a project for making a magpie robot (what is this?!) for the AP CS course. Oh by the way, I use `Thread.sleep()` to make the robot respond slower...Can you believe that???
