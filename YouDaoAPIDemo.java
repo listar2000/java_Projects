@@ -17,11 +17,11 @@ public class DeliveryTest {
 
     static String sign;
     static String url = "https://openapi.youdao.com/api";
-    static String appKey = "77957594e8cae0f8";
+    static String appKey = "YOUR APP KEY";
     static String from = "auto";
     static String to = "EN";
     static String salt = String.valueOf(System.currentTimeMillis());
-    static String appSecret = "0gA9t1gdzzcBTV0Bm1Oc4Wp0sGI4S4v1";
+    static String appSecret = "YOUR APP SECRET CODE";
 
     public static void checkWord(String query) throws Exception
     {
