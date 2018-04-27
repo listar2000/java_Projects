@@ -24,3 +24,6 @@ P.S. new functionalities are successfully added to the program. Now it seems les
 
 # April 8, 2018
 Recently I only did two things for this repo (meaning that I'm totally disappointed by the CS course and decide to do sth on my own XD). One is about a special diamond pattern printed out in the console window, and I did this to answer a question on Zhihu (which was unfortunately closed TT); secondly, I have to do a project for making a magpie robot (what is this?!) for the AP CS course. Oh by the way, I use `Thread.sleep()` to make the robot respond slower...Can you believe that???
+
+# April 28, 2018
+Currently I'm doing two things (about programming) at the very same time: one is building/imitating an online shopping system in Java in my spare time, the second is about algorithm/data structure...The previous Tmall Repo at Github seems to be a failure so far. In an attempt to make it into a dynamic-web project, I actually migrated it in my computer. I will probably upload the entire project after it is finished.
