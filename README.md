@@ -27,3 +27,6 @@ Recently I only did two things for this repo (meaning that I'm totally disappoin
 
 # April 28, 2018
 Currently I'm doing two things (about programming) at the very same time: one is building/imitating an online shopping system in Java in my spare time, the second is about algorithm/data structure...The previous Tmall Repo at Github seems to be a failure so far. In an attempt to make it into a dynamic-web project, I actually migrated it in my computer. I will probably upload the entire project after it is finished.
+
+# May 24, 2018
+I've uploaded something today. Well for a long time, frankly speaking, I haven't even touched Java. But this language is perfect for doing algorithms XD. You can have a look at the `InfixCalculation.java` file to see what I've done.
